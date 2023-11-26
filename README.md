@@ -5,6 +5,8 @@ based upon the default [`ollama/ollama`](https://hub.docker.com/r/ollama/ollama)
 Docker image, but supports automatic loading of models from 
 [Huggingface](https://huggingface.co/models).
 
+The image is hosted at [DockerHub](https://hub.docker.com/repository/docker/jiribakker/ollama-runpod-template)
+
 ## Usage
 
 Create a RunPod.io custom template based on this docker image, exposing port 11434. 
