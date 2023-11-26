@@ -21,12 +21,12 @@ fi
 
 if [[ -z "${OLLAMA_MODEL_SHORTNAME}" ]]; then
   log "OLLAMA_MODEL_SHORTNAME environment variable not set. Defaulting to: ${OLLAMA_MODEL_FILENAME} (value of OLLAMA_MODEL_FILENAME environment variable)"
-  : "${OLLAMA_MODEL_SHORTNAME:=OLLAMA_MODEL_FILENAME}"
+  : "${OLLAMA_MODEL_SHORTNAME:=$OLLAMA_MODEL_FILENAME}"
 fi
 
 if [[ -z "${OLLAMA_NUM_GPU}" ]]; then
-  log "OLLAMA_NUM_GPU environment variable not set. Defaulting to: 50"
-  : "${OLLAMA_NUM_GPU:=50}"
+  log "OLLAMA_NUM_GPU environment variable not set. Defaulting to: 60"
+  : "${OLLAMA_NUM_GPU:=60}"
 fi
 
 log "Attempting to download $OLLAMA_MODEL_FILENAME from $HUGGINGFACE_REPO..."
@@ -40,12 +40,13 @@ huggingface-cli download \
 
 log "Generating Modelfile..."
 
-rm /workspace/Modelfile-${OLLAMA_MODEL_SHORTNAME}
-echo "FROM /workspace/jiri/downloads/phind-codellama-34b-v2.Q4_K_M.gguf" > /workspace/Modelfile-${OLLAMA_MODEL_SHORTNAME}
-echo "PARAMETER num_gpu ${OLLAMA_NUM_GPU}" > /workspace/Modelfile-${OLLAMA_MODEL_SHORTNAME}
+echo "FROM ${OLLAMA_MODELS}/downloads/phind-codellama-34b-v2.Q4_K_M.gguf" > ${OLLAMA_MODELS}/Modelfile-${OLLAMA_MODEL_SHORTNAME}
+echo "PARAMETER num_gpu ${OLLAMA_NUM_GPU}" >> ${OLLAMA_MODELS}/Modelfile-${OLLAMA_MODEL_SHORTNAME}
 
 log "Loading model into ollama..."
 
-ollama create ${OLLAMA_MODEL_SHORTNAME} -f /workspace/jiri/Modelfile-${OLLAMA_MODEL_SHORTNAME}
-
-log "Model ${OLLAMA_MODEL_SHORTNAME} successfully loaded!"
+if ollama create ${OLLAMA_MODEL_SHORTNAME} -f ${OLLAMA_MODELS}/Modelfile-${OLLAMA_MODEL_SHORTNAME}; then
+  log "Model ${OLLAMA_MODEL_SHORTNAME} successfully loaded!"
+else
+  log "Failed to load model ${OLLAMA_MODEL_SHORTNAME}"
+fi

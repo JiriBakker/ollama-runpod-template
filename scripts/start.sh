@@ -8,6 +8,6 @@ fi
 mkdir -p ${OLLAMA_MODELS}/downloads    
 mkdir -p /scripts/log
 
-/bin/bash /scripts/load-huggingface-model.sh | tee /scripts/log/load-huggingface-model.log &
+/bin/bash /scripts/load-huggingface-model.sh 2>&1 | tee /scripts/log/load-huggingface-model.log &
 
-/bin/ollama serve
+/bin/ollama serve 2>&1 | tee /scripts/log/start.log

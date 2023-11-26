@@ -20,5 +20,5 @@ Then deploy the custom template (preferrably with a network volume mounted at `/
 * `HUGGINGFACE_REPO` - Name of the HuggingFcae model repository (eg. `TheBloke/Phind-CodeLlama-34B-v2-GGUF`)
 * `OLLAMA_MODEL_FILENAME` - Filename of specific file to be downloaded (eg. `phind-codellama-34b-v2.Q4_K_M.gguf`)
 * `OLLAMA_MODEL_SHORTNAME` - Shorthand reference to model (defaults to `OLLAMA_MODEL_FILENAME` value)
-* `OLLAMA_NUM_GPU` - Specify how many layers Ollama should offload to a GPU (defaults to `50`)
+* `OLLAMA_NUM_GPU` - Specify how many layers Ollama should offload to a GPU (defaults to `60`)
 * `OLLAMA_MODELS` - Directory where Ollama models will be stored. If you have not mounted a network volume you probably need to set this explicitly (defaults to `/workspace/models`)
